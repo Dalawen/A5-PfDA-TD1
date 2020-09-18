@@ -63,16 +63,32 @@ avocat.dtypes
 # In[26]:
 
 
+# Total avocat par région
 t1 = avocat.groupby("region").TotVolume.sum().sort_values()
 t1.head()
 
 
+# In[48]:
+
+
+# Total avocat US
+avocat.TotVolume.sum()
+
+
 # #### Moyenne de prix par région 
 
-# In[14]:
+# In[49]:
 
 
-avocat.groupby("region").AveragePrice.mean().sort_values()
+# Prix moyen sur les dernières années d'un avocat par région US
+avocat.groupby("region").AveragePrice.mean().sort_values().tail()
+
+
+# In[50]:
+
+
+# Prix moyen sur les dernières années d'un avocat au US
+avocat.AveragePrice.mean()
 
 
 # In[15]:
@@ -111,7 +127,7 @@ avocat[(avocat.region=="StLouis")].groupby("Date").V4225.sum().plot()
 avocat[(avocat.region=="StLouis")].groupby("Date").V4770.sum().plot()
 
 
-# In[24]:
+# In[44]:
 
 
 avocat[(avocat.region=="Houston")].groupby("Date").V4046.sum().plot()
@@ -119,8 +135,17 @@ avocat[(avocat.region=="Houston")].groupby("Date").V4225.sum().plot()
 avocat[(avocat.region=="Houston")].groupby("Date").V4770.sum().plot()
 
 
-# In[ ]:
+# #### Types d'avocats
+
+# In[33]:
 
 
+Type =avocat.pivot_table('TotVolume',index='Date',columns='type',aggfunc=sum)
+Type.tail() #Tail = queue du tableau
 
+
+# In[36]:
+
+
+Type.plot(title="Type d'avocats")
 
